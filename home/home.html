@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServUp - Encontre Profissionais Especializados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1b498e;
+            --secondary-blue: #3a82f7;
+            --accent-green: #1c7354;
+            --bg-light-blue: #f0f5ff;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --star-color: #f3c623;
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .app-container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(0,0,0,0.03);
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--white);
+            border-bottom: 1px solid #edf2f7;
+            flex-wrap: wrap; 
+        }
+
+        .tab {
+            padding: 20px 40px; 
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .tab:hover {
+            color: var(--secondary-blue);
+        }
+
+        .tab.active {
+            color: var(--secondary-blue);
+            border-bottom-color: var(--secondary-blue);
+        }
+
+        /* HERO & SEARCH */
+        .hero-section {
+            padding: 40px 60px;
+            background: linear-gradient(180deg, #fff 0%, var(--bg-body) 100%);
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* BANNER */
+        .banner-wrapper {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .banner-wrapper img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* CATEGORIES */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 0 60px 40px;
+        }
+
+        .cat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .cat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--secondary-blue);
+        }
+
+        .cat-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-blue);
+            margin-bottom: 15px;
+        }
+
+        /* WORKERS GRID */
+        .section-header {
+            padding: 0 60px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .workers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            padding: 0 60px 20px; /* Reduzido o padding bottom para dar espaço ao "Quem Somos" */
+        }
+
+        .worker-card {
+            background: var(--white);
+            border: 1px solid #edf2f7;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            transition: 0.3s;
+        }
+
+        .worker-card:hover {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+        }
+
+        .worker-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .worker-details { flex: 1; }
+
+        .price-tag {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* ABOUT SECTION (QUEM SOMOS) - ESTILO MINIMALISTA */
+        .about-section {
+            background-color: var(--white);
+            padding: 80px 60px;
+            margin: 0 auto;
+            max-width: 800px; /* Mais estreito para leitura focada e minimalista */
+        }
+
+        .about-title {
+            text-align: center;
+            color: var(--text-dark); /* Removido o azul forte */
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .about-subtitle {
+            text-align: center;
+            color: #888; /* Cinza suave */
+            font-size: 1.05rem;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        .about-content-text {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .about-content-text p strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .about-highlight {
+            margin-top: 60px;
+            padding: 0 20px;
+            font-style: italic;
+            text-align: center;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        /* Detalhe sutil nas aspas da citação */
+        .about-highlight::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: #edf2f7; /* Cor bem clara para ser apenas um detalhe de fundo */
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: serif;
+            z-index: 0;
+        }
+
+        .about-highlight span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FAQ SECTION */
+        .faq-container {
+            padding: 0 60px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        details {
+            background: var(--white);
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 20px 25px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 5px 15px rgba(58, 130, 247, 0.08);
+        }
+
+        summary {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--secondary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            margin-top: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            padding-top: 15px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* FAB */
+        .help-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(27,73,142,0.3);
+            cursor: pointer;
+            z-index: 9999;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .help-fab:hover {
+            transform: scale(1.05);
+            background: var(--secondary-blue);
+        }
+
+        footer {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 60px;
+            text-align: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="header-logo">
+                <img src="assets/logo.png" alt="ServUp" class="header-logo-img">
+                <span>ServUp</span>
+            </div>
+            <div class="header-icons">
+                <i class="fa-regular fa-bell" style="font-size: 1.2rem; cursor: pointer;"></i>
+                <i class="fa-regular fa-comment-dots" style="font-size: 1.2rem; cursor: pointer;"></i>
+                <div class="user-profile">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Minha Conta</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <div class="tab active" onclick="activateTab(this); window.scrollTo(0,0);">Profissionais</div>
+            <div class="tab" onclick="activateTab(this); document.getElementById('about-section').scrollIntoView();">Quem Somos</div>
+            <div class="tab" onclick="activateTab(this); document.getElementById('faq-section').scrollIntoView();">Perguntas Frequentes</div>
+        </nav>
+
+        <section class="hero-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Ex: Eletricista em São Paulo, Pintor...">
+                </div>
+                <button style="background: var(--secondary-blue); color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s;">Buscar Profissional</button>
+            </div>
+
+            <div class="banner-wrapper">
+                <img src="assets/imagemHeader.png" alt="Banner ServUp">
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h3>Categorias em Destaque</h3>
+        </div>
+
+        <div class="categories-grid">
+            <div class="cat-card">
+                <i class="fa-solid fa-broom"></i>
+                <h4>Limpeza</h4>
+            </div>
+            <div class="cat-card">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h4>Reparos</h4>
+            </div>
+            <div class="cat-card">
+                <i class="fa-solid fa-leaf"></i>
+                <h4>Jardim</h4>
+            </div>
+            <div class="cat-card">
+                <i class="fa-solid fa-faucet-drip"></i>
+                <h4>Hidráulica</h4>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h3>Trabalhadores Disponíveis</h3>
+            <a href="#" style="color: var(--secondary-blue); text-decoration: none; font-weight: 500;">Ver todos <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="workers-grid">
+            <div class="worker-card">
+                <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Ricardo Santos</span>
+                        <i class="fa-regular fa-bookmark" onclick="toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 5.0 <span style="color: #999;">(124 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Especialista em automação residencial e instalações elétricas complexas.</p>
+                    <div class="price-tag">R$ 85,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                </div>
+            </div>
+
+            <div class="worker-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Juliana Lima</span>
+                        <i class="fa-regular fa-bookmark" onclick="toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.9 <span style="color: #999;">(89 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Organização de ambientes e limpeza pós-obra com foco em detalhes.</p>
+                    <div class="price-tag">R$ 120,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="about-section" id="about-section">
+            <h2 class="about-title">SERV_UP</h2>
+            <p class="about-subtitle">Conectando você aos serviços que facilitam sua vida</p>
+            
+            <div class="about-content-text">
+                <p>Tudo começou com um problema simples do dia a dia: encontrar profissionais de confiança para cuidar da casa. Muitas pessoas precisam de ajuda com limpeza, jardinagem ou manutenção da piscina, mas nem sempre sabem onde procurar alguém confiável, disponível e com boa recomendação.</p>
+                <p>Foi pensando nisso que nasceu o <strong>SERV_UP</strong>.</p>
+                <p>O SERV_UP é um aplicativo criado para aproximar pessoas que precisam de serviços domésticos de profissionais qualificados e verificados. Em poucos minutos, você pode encontrar empregadas domésticas, jardineiras, piscineiros e diversos outros profissionais prontos para ajudar.</p>
+                <p>A plataforma funciona como uma ponte segura entre clientes e prestadores de serviço. Cada profissional passa por um processo de cadastro e verificação, garantindo mais segurança e tranquilidade para quem contrata. Além disso, o aplicativo permite ver avaliações, escolher horários disponíveis e solicitar o serviço de forma rápida e prática.</p>
+                <p>Nossa missão é simples: facilitar a conexão entre quem precisa de serviços e quem sabe fazer bem feito, trazendo mais praticidade para o dia a dia e valorizando o trabalho de milhares de profissionais.</p>
+            </div>
+
+            <div class="about-highlight">
+                <span>Para quem precisa de ajuda, o SERV_UP oferece conveniência e confiança. Para quem presta serviços, abre portas para novas oportunidades de trabalho.</span>
+            </div>
+        </section>
+
+        <div class="section-header" id="faq-section">
+            <h3>Perguntas Frequentes (FAQ)</h3>
+        </div>
+        
+        <div class="faq-container">
+            <details>
+                <summary>Como funciona o pagamento dos serviços?</summary>
+                <div class="faq-content">O pagamento é combinado diretamente entre você e o profissional contratado. Recomendamos utilizar métodos rastreáveis como PIX, transferência bancária ou plataformas de pagamento seguras para garantir a integridade da transação. A ServUp não cobra taxas adicionais sobre o valor do serviço.</div>
+            </details>
+
+            <details>
+                <summary>Os profissionais passam por alguma verificação?</summary>
+                <div class="faq-content">Sim. Solicitamos documentos de identidade, comprovante de residência e referências de trabalhos anteriores durante o cadastro na plataforma. Além disso, o nosso sistema de avaliações garante que profissionais com baixo desempenho sejam rebaixados ou removidos.</div>
+            </details>
+
+            <details>
+                <summary>O que acontece se eu não gostar do serviço prestado?</summary>
+                <div class="faq-content">Se o serviço não for executado conforme o combinado, você deve primeiramente tentar alinhar uma correção diretamente com o profissional. Caso não haja acordo, você pode abrir um chamado em nosso suporte através do botão "Precisa de Ajuda?" e nossa equipe de mediação entrará em ação.</div>
+            </details>
+        </div>
+
+        <footer>
+            <div style="font-size: 1.5rem; color: white; margin-bottom: 20px;">
+                <i class="fa-solid fa-bolt-lightning"></i> ServUp
+            </div>
+            <p>Conectando excelência profissional às suas necessidades.</p>
+            <div style="margin-top: 20px; font-size: 0.8rem;">
+                © 2026 ServUp Brasil - Todos os direitos reservados.
+            </div>
+        </footer>
+    </div>
+
+    <a href="#" class="help-fab">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Suporte</span>
+    </a>
+
+    <script>
+        function toggleBookmark(icon) {
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+            if(icon.classList.contains('fa-solid')) icon.style.color = '#1b498e';
+            else icon.style.color = 'inherit';
+        }
+
+        function activateTab(clickedTab) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            clickedTab.classList.add('active');
+        }
+    </script>
+</body>
+</html>
