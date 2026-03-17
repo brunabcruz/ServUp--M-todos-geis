@@ -11,23 +11,10 @@
 
 # Estrutura do projeto
 
-|__Paginas
-    |___home
-        |__home.html
-        |__home.css
-        |__assets
-    |___perfil 
-        |__perfil.html
-        |__perfil.css
-        |__assets
-    |___pagamento
-        |__pagamento.html
-        |__pagamento.css
-        |__assets
-    |___avalição
-        |__avaliação.html
-        |__avaliação.css
-        |__assets
+|__Home
+    |_contratar.html
+    |_home.html
+    |_perfil.html
 |__README.md 
 
 # Figma
