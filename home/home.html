@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServUp - Encontre Profissionais Especializados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1b498e;
+            --secondary-blue: #3a82f7;
+            --accent-green: #1c7354;
+            --bg-light-blue: #f0f5ff;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --star-color: #f3c623;
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .app-container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(0,0,0,0.03);
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--white);
+            border-bottom: 1px solid #edf2f7;
+            flex-wrap: wrap; 
+        }
+
+        .tab {
+            padding: 20px 40px; 
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .tab:hover {
+            color: var(--secondary-blue);
+        }
+
+        .tab.active {
+            color: var(--secondary-blue);
+            border-bottom-color: var(--secondary-blue);
+        }
+
+        /* HERO & SEARCH */
+        .hero-section {
+            padding: 40px 60px;
+            background: linear-gradient(180deg, #fff 0%, var(--bg-body) 100%);
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* BANNER */
+        .banner-wrapper {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .banner-wrapper img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* CATEGORIES */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 0 60px 40px;
+        }
+
+        .cat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .cat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--secondary-blue);
+        }
+
+        .cat-card .cat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 14px;
+        }
+
+        .cat-icon.blue { background: #eff6ff; color: var(--secondary-blue); }
+        .cat-icon.green { background: #f0fdf4; color: #16a34a; }
+        .cat-icon.purple { background: #faf5ff; color: #7c3aed; }
+        .cat-icon.orange { background: #fff7ed; color: #ea580c; }
+
+        /* WORKERS GRID */
+        .section-header {
+            padding: 0 60px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .workers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            padding: 0 60px 20px; /* Reduzido o padding bottom para dar espaço ao "Quem Somos" */
+        }
+
+        .worker-card {
+            background: var(--white);
+            border: 1px solid #edf2f7;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            transition: 0.3s;
+        }
+
+        .worker-card:hover {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+        }
+
+        .worker-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .worker-details { flex: 1; }
+
+        .price-tag {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* ABOUT SECTION (QUEM SOMOS) */
+        .about-section {
+            background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);
+            padding: 60px;
+            margin: 40px 60px;
+            border-radius: 24px;
+            border: 1px solid #e8edf8;
+        }
+
+        .about-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .about-badge {
+            background: var(--primary-blue);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .about-title {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .about-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .about-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        .about-text p { margin-bottom: 12px; }
+        .about-text p:last-child { margin-bottom: 0; }
+        .about-text strong { color: var(--text-dark); font-weight: 600; }
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 6px 16px rgba(58,130,247,0.08);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.blue { background: #eff6ff; color: var(--secondary-blue); }
+        .stat-icon.green { background: #f0fdf4; color: #16a34a; }
+        .stat-icon.orange { background: #fff7ed; color: #ea580c; }
+
+        .stat-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .stat-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* FAQ SECTION */
+        .faq-container {
+            padding: 0 60px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        details {
+            background: var(--white);
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 20px 25px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 5px 15px rgba(58, 130, 247, 0.08);
+        }
+
+        summary {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--secondary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            margin-top: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            padding-top: 15px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        /* FAB */
+        .help-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(27,73,142,0.3);
+            cursor: pointer;
+            z-index: 9999;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .help-fab:hover {
+            transform: scale(1.05);
+            background: var(--secondary-blue);
+        }
+
+        footer {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 60px;
+            text-align: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="header-logo">
+                <img src="assets/logo.png" alt="ServUp" class="header-logo-img">
+                <span>ServUp</span>
+            </div>
+            <div class="header-icons">
+                <i class="fa-regular fa-bell" style="font-size: 1.2rem; cursor: pointer;"></i>
+                <i class="fa-regular fa-comment-dots" style="font-size: 1.2rem; cursor: pointer;"></i>
+                <div class="user-profile">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Minha Conta</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <div class="tab active" onclick="activateTab(this); window.scrollTo(0,0);">Profissionais</div>
+            <div class="tab" onclick="activateTab(this); document.getElementById('about-section').scrollIntoView();">Quem Somos</div>
+            <div class="tab" onclick="activateTab(this); document.getElementById('faq-section').scrollIntoView();">Perguntas Frequentes</div>
+        </nav>
+
+        <section class="hero-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Ex: Eletricista em São Paulo, Pintor...">
+                </div>
+                <button style="background: var(--secondary-blue); color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 0.95rem; letter-spacing: 0.2px;" onmouseover="this.style.background='#1b498e'" onmouseout="this.style.background='#3a82f7'"><i class="fa-solid fa-magnifying-glass" style="margin-right: 8px;"></i>Buscar</button>
+            </div>
+
+            <div class="banner-wrapper">
+                <img src="assets/imagemHeader.png" alt="Banner ServUp">
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h3>Categorias em Destaque</h3>
+        </div>
+
+        <div class="categories-grid">
+            <div class="cat-card">
+                <div class="cat-icon blue"><i class="fa-solid fa-broom"></i></div>
+                <h4>Limpeza</h4>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon orange"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                <h4>Reparos</h4>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon green"><i class="fa-solid fa-leaf"></i></div>
+                <h4>Jardim</h4>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon purple"><i class="fa-solid fa-faucet-drip"></i></div>
+                <h4>Hidráulica</h4>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h3>Trabalhadores Disponíveis</h3>
+            <a href="#" style="color: var(--secondary-blue); text-decoration: none; font-weight: 500;">Ver todos <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="workers-grid">
+            <div class="worker-card" onclick="location.href='perfil.html?worker=ricardo'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Ricardo Santos</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 5.0 <span style="color: #999;">(124 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Especialista em automação residencial e instalações elétricas complexas.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 85,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=ricardo" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=juliana'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Juliana Lima</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.9 <span style="color: #999;">(89 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Organização de ambientes e limpeza pós-obra com foco em detalhes.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 120,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=juliana" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=carlos'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Carlos Mendes</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.8 <span style="color: #999;">(67 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Encanador com 12 anos de experiência em reparos hidráulicos residenciais e comerciais.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 90,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=carlos" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=fernanda'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Fernanda Oliveira</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 5.0 <span style="color: #999;">(143 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Jardineira paisagista especializada em jardins verticais e hortas urbanas.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 75,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=fernanda" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=marcos'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Marcos Pereira</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.7 <span style="color: #999;">(52 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Pintor profissional com especialização em texturas, grafiato e acabamentos finos.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 70,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=marcos" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=ana'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Ana Costa</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.9 <span style="color: #999;">(211 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Diarista com experiência em casas e apartamentos, pontual e muito atenciosa.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 55,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=ana" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="about-section" id="about-section">
+            <div class="about-inner">
+                <div class="about-header">
+                    <div class="about-badge"><i class="fa-solid fa-bolt-lightning"></i></div>
+                    <div>
+                        <h2 class="about-title">Quem Somos</h2>
+                        <p class="about-subtitle">Conectando você aos serviços que facilitam sua vida</p>
+                    </div>
+                </div>
+
+                <div class="about-body">
+                    <div class="about-text">
+                        <p>O <strong>ServUp</strong> nasceu para resolver um problema simples do dia a dia: encontrar profissionais de confiança para cuidar da sua casa.</p>
+                        <p>Somos uma plataforma que conecta clientes a profissionais qualificados e verificados — de eletricistas a diaristas — de forma rápida, segura e prática.</p>
+                        <p>Nossa missão é criar uma ponte confiável entre quem precisa de serviços e quem sabe fazê-los bem, valorizando o trabalho de milhares de profissionais.</p>
+                    </div>
+
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="stat-info">
+                                <h4>Profissionais verificados</h4>
+                                <p>Documentos e referências conferidos antes do cadastro</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-star"></i></div>
+                            <div class="stat-info">
+                                <h4>Avaliações reais</h4>
+                                <p>Sistema de notas por clientes que já contrataram</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="stat-info">
+                                <h4>Contratação rápida</h4>
+                                <p>Encontre e solicite um profissional em minutos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-header" id="faq-section">
+            <h3>Perguntas Frequentes (FAQ)</h3>
+        </div>
+        
+        <div class="faq-container">
+            <details>
+                <summary>Como funciona o pagamento dos serviços?</summary>
+                <div class="faq-content">O pagamento é combinado diretamente entre você e o profissional contratado. Recomendamos utilizar métodos rastreáveis como PIX, transferência bancária ou plataformas de pagamento seguras para garantir a integridade da transação. A ServUp não cobra taxas adicionais sobre o valor do serviço.</div>
+            </details>
+
+            <details>
+                <summary>Os profissionais passam por alguma verificação?</summary>
+                <div class="faq-content">Sim. Solicitamos documentos de identidade, comprovante de residência e referências de trabalhos anteriores durante o cadastro na plataforma. Além disso, o nosso sistema de avaliações garante que profissionais com baixo desempenho sejam rebaixados ou removidos.</div>
+            </details>
+
+            <details>
+                <summary>O que acontece se eu não gostar do serviço prestado?</summary>
+                <div class="faq-content">Se o serviço não for executado conforme o combinado, você deve primeiramente tentar alinhar uma correção diretamente com o profissional. Caso não haja acordo, você pode abrir um chamado em nosso suporte através do botão "Precisa de Ajuda?" e nossa equipe de mediação entrará em ação.</div>
+            </details>
+        </div>
+
+        <footer>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                <img src="assets/logo.png" alt="ServUp" style="width: 36px; height: 36px; object-fit: contain; border-radius: 8px;">
+                <span style="font-size: 1.5rem; color: white; font-weight: 700;">ServUp</span>
+            </div>
+            <p>Conectando excelência profissional às suas necessidades.</p>
+            <div style="margin-top: 20px; font-size: 0.8rem;">
+                © 2026 ServUp Brasil - Todos os direitos reservados.
+            </div>
+        </footer>
+    </div>
+
+    <a href="#" class="help-fab">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Suporte</span>
+    </a>
+
+    <script>
+        function toggleBookmark(icon) {
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+            if(icon.classList.contains('fa-solid')) icon.style.color = '#1b498e';
+            else icon.style.color = 'inherit';
+        }
+
+        function activateTab(clickedTab) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            clickedTab.classList.add('active');
+        }
+    </script>
+</body>
+</html>

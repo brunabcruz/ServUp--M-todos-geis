@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Profissional - ServUp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1b498e;
+            --secondary-blue: #3a82f7;
+            --accent-green: #1c7354;
+            --bg-light-blue: #f0f5ff;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --star-color: #f3c623;
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-body); color: var(--text-dark); }
+
+        header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .header-logo img { width: 40px; height: 40px; object-fit: contain; border-radius: 6px; }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .back-btn:hover { color: white; }
+
+        .page-wrapper {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 0 20px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* HERO CARD */
+        .profile-hero {
+            background: var(--white);
+            border-radius: 24px;
+            border: 1px solid #edf2f7;
+            overflow: hidden;
+        }
+
+        .profile-cover {
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+        }
+
+        .profile-body {
+            padding: 0 32px 32px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .profile-photo-wrap {
+            margin-top: -50px;
+            flex-shrink: 0;
+        }
+
+        .profile-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .profile-info { flex: 1; padding-top: 16px; min-width: 200px; }
+        .profile-info h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+
+        .profile-profession {
+            color: var(--secondary-blue);
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .profile-meta span { display: flex; align-items: center; gap: 6px; }
+
+        .rating-stars { color: var(--star-color); }
+
+        .hire-btn {
+            background: var(--secondary-blue);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-end;
+            margin-top: 16px;
+        }
+        .hire-btn:hover { background: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(58,130,247,0.25); }
+
+        /* CARDS GENÉRICOS */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid #edf2f7;
+            padding: 28px 32px;
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3 i { color: var(--secondary-blue); font-size: 1rem; }
+
+        /* SOBRE */
+        .about-text { color: var(--text-muted); line-height: 1.75; font-size: 0.95rem; }
+
+        /* SERVIÇOS */
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .service-item {
+            background: var(--bg-body);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid #edf2f7;
+        }
+
+        .service-item i { color: var(--secondary-blue); width: 16px; text-align: center; }
+
+        /* DISPONIBILIDADE */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .day-cell {
+            text-align: center;
+            border-radius: 12px;
+            padding: 12px 6px;
+            font-size: 0.8rem;
+        }
+
+        .day-cell .day-name { font-weight: 600; margin-bottom: 6px; color: var(--text-dark); }
+        .day-cell .day-status { font-size: 0.75rem; }
+
+        .day-cell.available { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .day-cell.available .day-status { color: #16a34a; }
+        .day-cell.unavailable { background: #f8fafc; border: 1px solid #e2e8f0; }
+        .day-cell.unavailable .day-status { color: #cbd5e1; }
+
+        /* AVALIAÇÕES */
+        .reviews-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .review-item {
+            padding: 18px;
+            background: var(--bg-body);
+            border-radius: 14px;
+            border: 1px solid #edf2f7;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .reviewer-name { font-weight: 600; font-size: 0.9rem; }
+        .review-date { font-size: 0.78rem; color: var(--text-muted); }
+        .review-stars { color: var(--star-color); font-size: 0.8rem; margin-bottom: 6px; }
+        .review-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .stat-box {
+            background: var(--white);
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-box .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--primary-blue); }
+        .stat-box .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+        @media (max-width: 640px) {
+            header { padding: 15px 20px; }
+            .profile-body { padding: 0 20px 24px; }
+            .card { padding: 20px; }
+            .schedule-grid { grid-template-columns: repeat(4, 1fr); }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="home.html" class="header-logo">
+        <img src="assets/logo.png" alt="ServUp">
+        <span>ServUp</span>
+    </a>
+    <a href="home.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+    </a>
+</header>
+
+<div class="page-wrapper">
+
+    <div class="profile-hero">
+        <div class="profile-cover" id="profile-cover"></div>
+        <div class="profile-body">
+            <div class="profile-photo-wrap">
+                <img id="profile-photo" src="" class="profile-photo" alt="Foto">
+            </div>
+            <div class="profile-info">
+                <h1 id="profile-name"></h1>
+                <div class="profile-profession" id="profile-profession"></div>
+                <div class="profile-meta">
+                    <span><span class="rating-stars" id="profile-stars"></span> <span id="profile-rating"></span> <span style="color:#ccc;">|</span> <span id="profile-reviews-count"></span> avaliações</span>
+                    <span><i class="fa-solid fa-location-dot"></i> <span id="profile-location"></span></span>
+                    <span><i class="fa-solid fa-briefcase"></i> <span id="profile-experience"></span> de experiência</span>
+                </div>
+            </div>
+            <a id="hire-link" href="#" class="hire-btn">
+                <i class="fa-solid fa-calendar-check"></i> Contratar agora
+            </a>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-num" id="stat-jobs"></div>
+            <div class="stat-label">Serviços concluídos</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num" id="stat-rating"></div>
+            <div class="stat-label">Nota média</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num" id="stat-repeat"></div>
+            <div class="stat-label">Clientes recorrentes</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fa-solid fa-user"></i> Sobre</h3>
+        <p class="about-text" id="profile-about"></p>
+    </div>
+
+    <div class="card">
+        <h3><i class="fa-solid fa-list-check"></i> Serviços oferecidos</h3>
+        <div class="services-list" id="services-list"></div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fa-solid fa-calendar-days"></i> Disponibilidade semanal</h3>
+        <div class="schedule-grid" id="schedule-grid"></div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fa-solid fa-star"></i> Avaliações recentes</h3>
+        <div class="reviews-list" id="reviews-list"></div>
+    </div>
+
+</div>
+
+<script>
+const workers = {
+    ricardo: {
+        name: "Ricardo Santos",
+        profession: "Eletricista Residencial e Comercial",
+        photo: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=300&q=80",
+        rating: 5.0,
+        reviewsCount: 124,
+        location: "São Paulo, SP",
+        experience: "9 anos",
+        price: 85,
+        coverColor: "linear-gradient(135deg, #1b3a6b 0%, #1b498e 100%)",
+        about: "Eletricista com 9 anos de experiência em instalações residenciais e comerciais. Especializado em automação residencial, cabeamento estruturado, quadros elétricos e instalação de painéis solares. Trabalho com materiais certificados e emito ART (Anotação de Responsabilidade Técnica) em todos os serviços. Pontual, organizado e comprometido com a segurança.",
+        services: ["Instalação elétrica", "Automação residencial", "Quadro de disjuntores", "Tomadas e interruptores", "Iluminação LED", "Painel solar", "CFTV / Câmeras", "Cabeamento estruturado"],
+        schedule: { "Seg": true, "Ter": true, "Qua": true, "Qui": true, "Sex": true, "Sáb": false, "Dom": false },
+        stats: { jobs: 312, rating: "5.0", repeat: "78%" },
+        reviews: [
+            { name: "Maria Fernanda", date: "12 mar 2026", stars: 5, text: "Ricardo foi incrível! Resolveu o problema do quadro elétrico em menos de 2 horas, limpou tudo e ainda identificou uma fiação antiga que precisava de troca. Super recomendo." },
+            { name: "Paulo Henrique", date: "5 mar 2026", stars: 5, text: "Excelente profissional. Instalou câmeras em toda a casa com o cabeamento bem organizado e discreto. Veio no horário combinado e o preço foi justo." },
+            { name: "Cláudia Rocha", date: "18 fev 2026", stars: 5, text: "Contratei para a automação da sala de reuniões da empresa. Trabalho impecável, sistema funcionando perfeitamente. Já agendei o retorno para o restante do escritório." }
+        ]
+    },
+    juliana: {
+        name: "Juliana Lima",
+        profession: "Especialista em Limpeza e Organização",
+        photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+        rating: 4.9,
+        reviewsCount: 89,
+        location: "São Paulo, SP",
+        experience: "6 anos",
+        price: 120,
+        coverColor: "linear-gradient(135deg, #0f4c81 0%, #3a82f7 100%)",
+        about: "Profissional de limpeza e organização com foco em resultado e atenção aos detalhes. Trabalho com produtos de alta qualidade e técnicas eficientes para limpeza pós-obra, limpeza pesada, organização de closets e mudanças. Discreta, confiável e com referências verificadas. Atendo residências e pequenos comércios.",
+        services: ["Limpeza pós-obra", "Limpeza pesada", "Organização de ambientes", "Limpeza de estofados", "Organização de closet", "Limpeza de vidros", "Cozinha profunda", "Mudanças"],
+        schedule: { "Seg": true, "Ter": true, "Qua": false, "Qui": true, "Sex": true, "Sáb": true, "Dom": false },
+        stats: { jobs: 201, rating: "4.9", repeat: "82%" },
+        reviews: [
+            { name: "Beatriz Alves", date: "10 mar 2026", stars: 5, text: "A Juliana transformou meu apartamento pós-reforma! Estava cheio de pó e resíduos de cimento e ela deixou tudo brilhando. Muito caprichosa e educada." },
+            { name: "Roberto Lima", date: "2 mar 2026", stars: 5, text: "Contratei para organizar o closet da minha esposa. O resultado superou nossas expectativas. Organizou tudo por categoria, cor e frequência de uso. Fantástico." },
+            { name: "Aline Souza", date: "20 fev 2026", stars: 4, text: "Ótimo trabalho na limpeza pesada do apartamento. Apenas demorou um pouco mais que o previsto, mas o resultado final foi excelente." }
+        ]
+    },
+    carlos: {
+        name: "Carlos Mendes",
+        profession: "Encanador Residencial e Comercial",
+        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+        rating: 4.8,
+        reviewsCount: 67,
+        location: "Guarulhos, SP",
+        experience: "12 anos",
+        price: 90,
+        coverColor: "linear-gradient(135deg, #1a4480 0%, #2563eb 100%)",
+        about: "Encanador com 12 anos no mercado, especializado em reparos hidráulicos, desentupimentos e instalação de sistemas de água quente. Trabalho com tubulações de PVC, CPVC e PEX. Atendo emergências com rapidez e ofereço garantia de 90 dias nos serviços realizados. Materiais de qualidade e atendimento transparente.",
+        services: ["Desentupimento", "Troca de canos", "Instalação de aquecedor", "Reparos em torneiras", "Caixa d'água", "Filtros e registros", "Banheiro completo", "Detecção de vazamentos"],
+        schedule: { "Seg": true, "Ter": true, "Qua": true, "Qui": false, "Sex": true, "Sáb": true, "Dom": false },
+        stats: { jobs: 245, rating: "4.8", repeat: "71%" },
+        reviews: [
+            { name: "Tatiane Campos", date: "9 mar 2026", stars: 5, text: "Carlos detectou um vazamento oculto na parede que já estava causando infiltração. Resolveu o problema de forma certeira sem precisar quebrar muito. Excelente!" },
+            { name: "Fernando Nunes", date: "28 fev 2026", stars: 5, text: "Fez a instalação completa do aquecedor a gás e dos chuveiros. Rápido, organizado e com ótimo preço. Garantia de 90 dias deu muita segurança." },
+            { name: "Simone Braga", date: "14 fev 2026", stars: 4, text: "Bom profissional, resolveu o entupimento que duas outras empresas não conseguiram. Só achei o prazo de agendamento um pouco longo." }
+        ]
+    },
+    fernanda: {
+        name: "Fernanda Oliveira",
+        profession: "Jardineira e Paisagista",
+        photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&q=80",
+        rating: 5.0,
+        reviewsCount: 143,
+        location: "Campinas, SP",
+        experience: "8 anos",
+        price: 75,
+        coverColor: "linear-gradient(135deg, #14532d 0%, #16a34a 100%)",
+        about: "Paisagista formada com 8 anos de experiência em projetos de jardins residenciais, jardins verticais e hortas urbanas. Cuido de toda a parte de planejamento, plantio, irrigação e manutenção. Trabalho com espécies nativas e plantas sustentáveis. Cada jardim é tratado como uma obra única, pensada para o espaço e estilo de vida do cliente.",
+        services: ["Projeto de jardim", "Jardim vertical", "Horta urbana", "Manutenção mensal", "Poda e corte", "Adubação e irrigação", "Vasos e paisagismo", "Grama sintética"],
+        schedule: { "Seg": true, "Ter": false, "Qua": true, "Qui": true, "Sex": true, "Sáb": true, "Dom": false },
+        stats: { jobs: 389, rating: "5.0", repeat: "91%" },
+        reviews: [
+            { name: "Lucia Martins", date: "11 mar 2026", stars: 5, text: "A Fernanda criou um jardim vertical na minha varanda que virou o destaque do apartamento. Ela cuida mensalmente e as plantas estão sempre viçosas. Amei!" },
+            { name: "Gustavo Torres", date: "3 mar 2026", stars: 5, text: "Contratamos para o projeto completo do nosso jardim. Ela levou em conta a orientação solar, o solo e nosso estilo de vida. O resultado foi simplesmente lindo." },
+            { name: "Priscila Faria", date: "22 fev 2026", stars: 5, text: "Minha horta urbana estava morrendo e ela salvou tudo, replantou, adubou e ensinou a cuidar. Profissional apaixonada pelo que faz." }
+        ]
+    },
+    marcos: {
+        name: "Marcos Pereira",
+        profession: "Pintor de Obras e Acabamentos",
+        photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
+        rating: 4.7,
+        reviewsCount: 52,
+        location: "Santo André, SP",
+        experience: "15 anos",
+        price: 70,
+        coverColor: "linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)",
+        about: "Pintor profissional com 15 anos de experiência em residências, apartamentos e estabelecimentos comerciais. Especializado em texturas decorativas, grafiato, cimento queimado e acabamentos finos. Trabalho com as melhores tintas do mercado e ofereço consultoria de cores sem custo adicional. Meu foco é entregar um resultado impecável dentro do prazo combinado.",
+        services: ["Pintura interna", "Pintura externa", "Textura decorativa", "Grafiato", "Cimento queimado", "Massa corrida", "Epóxi para piso", "Consultoria de cores"],
+        schedule: { "Seg": true, "Ter": true, "Qua": true, "Qui": true, "Sex": false, "Sáb": true, "Dom": false },
+        stats: { jobs: 178, rating: "4.7", repeat: "65%" },
+        reviews: [
+            { name: "Cristina Moura", date: "8 mar 2026", stars: 5, text: "Marcos fez a textura de toda a sala e ficou perfeito! Ele ainda ajudou na escolha da cor e combinação com os móveis. Super caprichoso e pontual." },
+            { name: "André Batista", date: "1 mar 2026", stars: 5, text: "Pintou o apartamento inteiro em 3 dias. Protegeu todos os móveis, limpou tudo ao final. Acabamento fino e preço honesto." },
+            { name: "Vanessa Cruz", date: "10 fev 2026", stars: 4, text: "Bom trabalho no cimento queimado do banheiro. Ficou lindo! Apenas tive que insistir um pouco para ele retornar e dar o retoque final." }
+        ]
+    },
+    ana: {
+        name: "Ana Costa",
+        profession: "Diarista Residencial",
+        photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80",
+        rating: 4.9,
+        reviewsCount: 211,
+        location: "São Paulo, SP",
+        experience: "7 anos",
+        price: 55,
+        coverColor: "linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%)",
+        about: "Diarista experiente com 7 anos de atuação em casas e apartamentos de todos os tamanhos. Pontual, honesta e muito atenciosa com cada detalhe da limpeza. Tenho carta de referência de mais de 30 clientes fixos. Trabalho com produtos próprios de qualidade ou utilizo os do cliente, conforme a preferência. Disponível para diárias avulsas ou contratos mensais.",
+        services: ["Limpeza completa", "Limpeza de banheiros", "Cozinha e fogão", "Lavanderia", "Passar roupas", "Organização geral", "Limpeza de geladeira", "Troca de roupas de cama"],
+        schedule: { "Seg": true, "Ter": true, "Qua": true, "Qui": true, "Sex": true, "Sáb": false, "Dom": false },
+        stats: { jobs: 534, rating: "4.9", repeat: "88%" },
+        reviews: [
+            { name: "Marcela Dias", date: "13 mar 2026", stars: 5, text: "A Ana é simplesmente incrível. Há 2 anos ela cuida da minha casa semanalmente e nunca me decepcionou. Pontual, cuidadosa e muito confiável." },
+            { name: "Henrique Melo", date: "7 mar 2026", stars: 5, text: "Contratei pela primeira vez e fiquei impressionado com o nível de cuidado. Ela organizou sem eu pedir, colocou tudo no lugar certo. Já agendei para voltar!" },
+            { name: "Camila Pinto", date: "25 fev 2026", stars: 5, text: "Além da limpeza impecável, a Ana passou todas as roupas com muito capricho. Uma profissional que você não quer perder." }
+        ]
+    }
+};
+
+function renderStars(rating) {
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    let html = '';
+    for (let i = 0; i < full; i++) html += '<i class="fa-solid fa-star"></i>';
+    if (half) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+    return html;
+}
+
+function init() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('worker') || 'ricardo';
+    const w = workers[id];
+    if (!w) { document.body.innerHTML = '<p style="padding:40px">Profissional não encontrado.</p>'; return; }
+
+    document.title = `${w.name} - ServUp`;
+    document.getElementById('profile-cover').style.background = w.coverColor;
+    document.getElementById('profile-photo').src = w.photo;
+    document.getElementById('profile-photo').alt = w.name;
+    document.getElementById('profile-name').textContent = w.name;
+    document.getElementById('profile-profession').textContent = w.profession;
+    document.getElementById('profile-stars').innerHTML = renderStars(w.rating);
+    document.getElementById('profile-rating').textContent = w.rating.toFixed(1);
+    document.getElementById('profile-reviews-count').textContent = w.reviewsCount;
+    document.getElementById('profile-location').textContent = w.location;
+    document.getElementById('profile-experience').textContent = w.experience;
+    document.getElementById('hire-link').href = `contratar.html?worker=${id}`;
+
+    document.getElementById('stat-jobs').textContent = w.stats.jobs;
+    document.getElementById('stat-rating').textContent = w.stats.rating;
+    document.getElementById('stat-repeat').textContent = w.stats.repeat;
+
+    document.getElementById('profile-about').textContent = w.about;
+
+    const servicesList = document.getElementById('services-list');
+    w.services.forEach(s => {
+        servicesList.innerHTML += `<div class="service-item"><i class="fa-solid fa-check"></i> ${s}</div>`;
+    });
+
+    const scheduleGrid = document.getElementById('schedule-grid');
+    Object.entries(w.schedule).forEach(([day, available]) => {
+        scheduleGrid.innerHTML += `
+            <div class="day-cell ${available ? 'available' : 'unavailable'}">
+                <div class="day-name">${day}</div>
+                <div class="day-status">${available ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'}</div>
+            </div>`;
+    });
+
+    const reviewsList = document.getElementById('reviews-list');
+    w.reviews.forEach(r => {
+        let stars = '';
+        for (let i = 0; i < r.stars; i++) stars += '<i class="fa-solid fa-star"></i>';
+        reviewsList.innerHTML += `
+            <div class="review-item">
+                <div class="review-header">
+                    <span class="reviewer-name">${r.name}</span>
+                    <span class="review-date">${r.date}</span>
+                </div>
+                <div class="review-stars">${stars}</div>
+                <p class="review-text">${r.text}</p>
+            </div>`;
+    });
+}
+
+init();
+</script>
+</body>
+</html>
