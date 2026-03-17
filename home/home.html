@@ -202,11 +202,21 @@
             border-color: var(--secondary-blue);
         }
 
-        .cat-card i {
-            font-size: 2.5rem;
-            color: var(--secondary-blue);
-            margin-bottom: 15px;
+        .cat-card .cat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 14px;
         }
+
+        .cat-icon.blue { background: #eff6ff; color: var(--secondary-blue); }
+        .cat-icon.green { background: #f0fdf4; color: #16a34a; }
+        .cat-icon.purple { background: #faf5ff; color: #7c3aed; }
+        .cat-icon.orange { background: #fff7ed; color: #ea580c; }
 
         /* WORKERS GRID */
         .section-header {
@@ -253,73 +263,118 @@
             font-size: 1.2rem;
         }
 
-        /* ABOUT SECTION (QUEM SOMOS) - ESTILO MINIMALISTA */
+        /* ABOUT SECTION (QUEM SOMOS) */
         .about-section {
-            background-color: var(--white);
-            padding: 80px 60px;
+            background: linear-gradient(135deg, #f0f5ff 0%, #ffffff 100%);
+            padding: 60px;
+            margin: 40px 60px;
+            border-radius: 24px;
+            border: 1px solid #e8edf8;
+        }
+
+        .about-inner {
+            max-width: 1000px;
             margin: 0 auto;
-            max-width: 800px; /* Mais estreito para leitura focada e minimalista */
+        }
+
+        .about-header {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .about-badge {
+            background: var(--primary-blue);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
         }
 
         .about-title {
-            text-align: center;
-            color: var(--text-dark); /* Removido o azul forte */
-            font-size: 2.2rem;
-            margin-bottom: 8px;
-            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            font-weight: 700;
             letter-spacing: -0.5px;
+            margin-bottom: 4px;
         }
 
         .about-subtitle {
-            text-align: center;
-            color: #888; /* Cinza suave */
-            font-size: 1.05rem;
-            margin-bottom: 50px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
             font-weight: 400;
         }
 
-        .about-content-text {
+        .about-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        .about-text p { margin-bottom: 12px; }
+        .about-text p:last-child { margin-bottom: 0; }
+        .about-text strong { color: var(--text-dark); font-weight: 600; }
+
+        .about-stats {
             display: flex;
             flex-direction: column;
-            gap: 25px;
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.05rem;
+            gap: 16px;
         }
 
-        .about-content-text p strong {
-            color: var(--text-dark);
+        .stat-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 6px 16px rgba(58,130,247,0.08);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.blue { background: #eff6ff; color: var(--secondary-blue); }
+        .stat-icon.green { background: #f0fdf4; color: #16a34a; }
+        .stat-icon.orange { background: #fff7ed; color: #ea580c; }
+
+        .stat-info h4 {
+            font-size: 0.95rem;
             font-weight: 600;
-        }
-
-        .about-highlight {
-            margin-top: 60px;
-            padding: 0 20px;
-            font-style: italic;
-            text-align: center;
             color: var(--text-dark);
-            font-weight: 500;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            position: relative;
-        }
-        
-        /* Detalhe sutil nas aspas da citação */
-        .about-highlight::before {
-            content: '\201C';
-            font-size: 4rem;
-            color: #edf2f7; /* Cor bem clara para ser apenas um detalhe de fundo */
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: serif;
-            z-index: 0;
+            margin-bottom: 2px;
         }
 
-        .about-highlight span {
-            position: relative;
-            z-index: 1;
+        .stat-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         /* FAQ SECTION */
@@ -444,7 +499,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Ex: Eletricista em São Paulo, Pintor...">
                 </div>
-                <button style="background: var(--secondary-blue); color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s;">Buscar Profissional</button>
+                <button style="background: var(--secondary-blue); color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 0.95rem; letter-spacing: 0.2px;" onmouseover="this.style.background='#1b498e'" onmouseout="this.style.background='#3a82f7'"><i class="fa-solid fa-magnifying-glass" style="margin-right: 8px;"></i>Buscar</button>
             </div>
 
             <div class="banner-wrapper">
@@ -458,19 +513,19 @@
 
         <div class="categories-grid">
             <div class="cat-card">
-                <i class="fa-solid fa-broom"></i>
+                <div class="cat-icon blue"><i class="fa-solid fa-broom"></i></div>
                 <h4>Limpeza</h4>
             </div>
             <div class="cat-card">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <div class="cat-icon orange"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                 <h4>Reparos</h4>
             </div>
             <div class="cat-card">
-                <i class="fa-solid fa-leaf"></i>
+                <div class="cat-icon green"><i class="fa-solid fa-leaf"></i></div>
                 <h4>Jardim</h4>
             </div>
             <div class="cat-card">
-                <i class="fa-solid fa-faucet-drip"></i>
+                <div class="cat-icon purple"><i class="fa-solid fa-faucet-drip"></i></div>
                 <h4>Hidráulica</h4>
             </div>
         </div>
@@ -481,51 +536,156 @@
         </div>
 
         <div class="workers-grid">
-            <div class="worker-card">
+            <div class="worker-card" onclick="location.href='perfil.html?worker=ricardo'" style="cursor:pointer;">
                 <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
                 <div class="worker-details">
                     <div style="display: flex; justify-content: space-between;">
                         <span style="font-weight: 700; font-size: 1.1rem;">Ricardo Santos</span>
-                        <i class="fa-regular fa-bookmark" onclick="toggleBookmark(this)" style="cursor: pointer;"></i>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
                     </div>
                     <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
                         <i class="fa-solid fa-star"></i> 5.0 <span style="color: #999;">(124 avaliações)</span>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Especialista em automação residencial e instalações elétricas complexas.</p>
-                    <div class="price-tag">R$ 85,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 85,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=ricardo" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
 
-            <div class="worker-card">
+            <div class="worker-card" onclick="location.href='perfil.html?worker=juliana'" style="cursor:pointer;">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
                 <div class="worker-details">
                     <div style="display: flex; justify-content: space-between;">
                         <span style="font-weight: 700; font-size: 1.1rem;">Juliana Lima</span>
-                        <i class="fa-regular fa-bookmark" onclick="toggleBookmark(this)" style="cursor: pointer;"></i>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
                     </div>
                     <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
                         <i class="fa-solid fa-star"></i> 4.9 <span style="color: #999;">(89 avaliações)</span>
                     </div>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Organização de ambientes e limpeza pós-obra com foco em detalhes.</p>
-                    <div class="price-tag">R$ 120,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 120,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=juliana" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=carlos'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Carlos Mendes</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.8 <span style="color: #999;">(67 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Encanador com 12 anos de experiência em reparos hidráulicos residenciais e comerciais.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 90,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=carlos" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=fernanda'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Fernanda Oliveira</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 5.0 <span style="color: #999;">(143 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Jardineira paisagista especializada em jardins verticais e hortas urbanas.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 75,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=fernanda" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=marcos'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Marcos Pereira</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.7 <span style="color: #999;">(52 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Pintor profissional com especialização em texturas, grafiato e acabamentos finos.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 70,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=marcos" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worker-card" onclick="location.href='perfil.html?worker=ana'" style="cursor:pointer;">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" class="worker-photo" alt="Perfil">
+                <div class="worker-details">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-weight: 700; font-size: 1.1rem;">Ana Costa</span>
+                        <i class="fa-regular fa-bookmark" onclick="event.stopPropagation(); toggleBookmark(this)" style="cursor: pointer;"></i>
+                    </div>
+                    <div style="color: var(--star-color); font-size: 0.8rem; margin: 5px 0;">
+                        <i class="fa-solid fa-star"></i> 4.9 <span style="color: #999;">(211 avaliações)</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Diarista com experiência em casas e apartamentos, pontual e muito atenciosa.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="price-tag">R$ 55,00 <small style="font-size: 0.7rem; color: #999;">/hora</small></div>
+                        <a href="perfil.html?worker=ana" onclick="event.stopPropagation()" style="font-size:0.8rem; color:var(--secondary-blue); font-weight:600; text-decoration:none;">Ver perfil <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <section class="about-section" id="about-section">
-            <h2 class="about-title">SERV_UP</h2>
-            <p class="about-subtitle">Conectando você aos serviços que facilitam sua vida</p>
-            
-            <div class="about-content-text">
-                <p>Tudo começou com um problema simples do dia a dia: encontrar profissionais de confiança para cuidar da casa. Muitas pessoas precisam de ajuda com limpeza, jardinagem ou manutenção da piscina, mas nem sempre sabem onde procurar alguém confiável, disponível e com boa recomendação.</p>
-                <p>Foi pensando nisso que nasceu o <strong>SERV_UP</strong>.</p>
-                <p>O SERV_UP é um aplicativo criado para aproximar pessoas que precisam de serviços domésticos de profissionais qualificados e verificados. Em poucos minutos, você pode encontrar empregadas domésticas, jardineiras, piscineiros e diversos outros profissionais prontos para ajudar.</p>
-                <p>A plataforma funciona como uma ponte segura entre clientes e prestadores de serviço. Cada profissional passa por um processo de cadastro e verificação, garantindo mais segurança e tranquilidade para quem contrata. Além disso, o aplicativo permite ver avaliações, escolher horários disponíveis e solicitar o serviço de forma rápida e prática.</p>
-                <p>Nossa missão é simples: facilitar a conexão entre quem precisa de serviços e quem sabe fazer bem feito, trazendo mais praticidade para o dia a dia e valorizando o trabalho de milhares de profissionais.</p>
-            </div>
+            <div class="about-inner">
+                <div class="about-header">
+                    <div class="about-badge"><i class="fa-solid fa-bolt-lightning"></i></div>
+                    <div>
+                        <h2 class="about-title">Quem Somos</h2>
+                        <p class="about-subtitle">Conectando você aos serviços que facilitam sua vida</p>
+                    </div>
+                </div>
 
-            <div class="about-highlight">
-                <span>Para quem precisa de ajuda, o SERV_UP oferece conveniência e confiança. Para quem presta serviços, abre portas para novas oportunidades de trabalho.</span>
+                <div class="about-body">
+                    <div class="about-text">
+                        <p>O <strong>ServUp</strong> nasceu para resolver um problema simples do dia a dia: encontrar profissionais de confiança para cuidar da sua casa.</p>
+                        <p>Somos uma plataforma que conecta clientes a profissionais qualificados e verificados — de eletricistas a diaristas — de forma rápida, segura e prática.</p>
+                        <p>Nossa missão é criar uma ponte confiável entre quem precisa de serviços e quem sabe fazê-los bem, valorizando o trabalho de milhares de profissionais.</p>
+                    </div>
+
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="stat-info">
+                                <h4>Profissionais verificados</h4>
+                                <p>Documentos e referências conferidos antes do cadastro</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-star"></i></div>
+                            <div class="stat-info">
+                                <h4>Avaliações reais</h4>
+                                <p>Sistema de notas por clientes que já contrataram</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="stat-info">
+                                <h4>Contratação rápida</h4>
+                                <p>Encontre e solicite um profissional em minutos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -551,8 +711,9 @@
         </div>
 
         <footer>
-            <div style="font-size: 1.5rem; color: white; margin-bottom: 20px;">
-                <i class="fa-solid fa-bolt-lightning"></i> ServUp
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                <img src="assets/logo.png" alt="ServUp" style="width: 36px; height: 36px; object-fit: contain; border-radius: 8px;">
+                <span style="font-size: 1.5rem; color: white; font-weight: 700;">ServUp</span>
             </div>
             <p>Conectando excelência profissional às suas necessidades.</p>
             <div style="margin-top: 20px; font-size: 0.8rem;">

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratar Profissional - ServUp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1b498e;
+            --secondary-blue: #3a82f7;
+            --bg-body: #f8fafc;
+            --text-dark: #2d3436;
+            --text-muted: #636e72;
+            --star-color: #f3c623;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-body); color: var(--text-dark); }
+
+        header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .header-logo img { width: 40px; height: 40px; object-fit: contain; border-radius: 6px; }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .back-btn:hover { color: white; }
+
+        .page-wrapper {
+            max-width: 860px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* STEPS */
+        .steps-header {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 8px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step.active .step-num { background: var(--secondary-blue); color: white; }
+        .step.active { color: var(--text-dark); }
+        .step.done .step-num { background: #16a34a; color: white; }
+
+        .step-divider { flex: 1; height: 2px; background: #e2e8f0; margin: 0 8px; max-width: 40px; }
+
+        /* FORM CARD */
+        .form-card {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid #edf2f7;
+            padding: 32px;
+        }
+
+        .form-card h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-card .form-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .form-section { margin-bottom: 28px; }
+
+        .form-section label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .form-section label i {
+            color: var(--secondary-blue);
+            margin-right: 6px;
+        }
+
+        /* SERVIÇOS CHIPS */
+        .services-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.83rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            background: var(--white);
+            color: var(--text-muted);
+        }
+
+        .chip:hover { border-color: var(--secondary-blue); color: var(--secondary-blue); }
+        .chip.selected { border-color: var(--secondary-blue); background: #eff6ff; color: var(--secondary-blue); font-weight: 600; }
+
+        /* DATE / TIME */
+        .date-time-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        input[type="date"], input[type="time"], input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            outline: none;
+            transition: 0.2s;
+            background: var(--white);
+        }
+
+        input:focus, textarea:focus, select:focus { border-color: var(--secondary-blue); box-shadow: 0 0 0 3px rgba(58,130,247,0.1); }
+
+        textarea { resize: vertical; min-height: 90px; }
+
+        /* DURATION */
+        .duration-row { display: flex; gap: 10px; }
+
+        .duration-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1.5px solid #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--white);
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+
+        .duration-btn:hover { border-color: var(--secondary-blue); color: var(--secondary-blue); }
+        .duration-btn.selected { border-color: var(--secondary-blue); background: #eff6ff; color: var(--secondary-blue); font-weight: 600; }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+        .worker-summary {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid #edf2f7;
+            padding: 24px;
+        }
+
+        .worker-summary-header {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .worker-summary-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .worker-summary-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+        .worker-summary-info p { font-size: 0.8rem; color: var(--text-muted); }
+        .worker-summary-rating { font-size: 0.8rem; color: var(--star-color); margin-top: 4px; }
+
+        .price-breakdown { display: flex; flex-direction: column; gap: 10px; }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .price-row.total {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1rem;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 4px;
+        }
+
+        .price-row.total span:last-child { color: var(--primary-blue); font-size: 1.1rem; }
+
+        .confirm-btn {
+            width: 100%;
+            background: var(--secondary-blue);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .confirm-btn:hover { background: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(58,130,247,0.25); }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: center;
+            justify-content: center;
+        }
+
+        .security-note i { color: #16a34a; }
+
+        /* MODAL DE CONFIRMAÇÃO */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon {
+            width: 72px;
+            height: 72px;
+            background: #f0fdf4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: #16a34a;
+        }
+
+        .modal h2 { font-size: 1.4rem; margin-bottom: 10px; }
+        .modal p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
+
+        .modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-btn.primary { background: var(--secondary-blue); color: white; }
+        .modal-btn.primary:hover { background: var(--primary-blue); }
+        .modal-btn.secondary { background: #f1f5f9; color: var(--text-dark); }
+        .modal-btn.secondary:hover { background: #e2e8f0; }
+
+        @media (max-width: 700px) {
+            header { padding: 15px 20px; }
+            .page-wrapper { grid-template-columns: 1fr; padding: 0 16px 60px; }
+            .steps-header { gap: 0; }
+            .date-time-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="home.html" class="header-logo">
+        <img src="assets/logo.png" alt="ServUp">
+        <span>ServUp</span>
+    </a>
+    <a id="back-to-profile" href="#" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Ver perfil
+    </a>
+</header>
+
+<div class="page-wrapper">
+
+    <div class="steps-header">
+        <div class="step active">
+            <div class="step-num">1</div>
+            <span>Detalhes do serviço</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <span>Confirmação</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <span>Pagamento</span>
+        </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="form-card">
+        <h2>Detalhes do serviço</h2>
+        <p class="form-subtitle">Preencha as informações para agendar o profissional</p>
+
+        <div class="form-section">
+            <label><i class="fa-solid fa-list-check"></i> Serviço desejado</label>
+            <div class="services-chips" id="services-chips"></div>
+        </div>
+
+        <div class="form-section">
+            <label><i class="fa-solid fa-calendar-day"></i> Data e horário</label>
+            <div class="date-time-row">
+                <input type="date" id="input-date" onchange="updatePrice()">
+                <input type="time" id="input-time" value="09:00" onchange="updatePrice()">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label><i class="fa-solid fa-clock"></i> Duração estimada</label>
+            <div class="duration-row" id="duration-row">
+                <button class="duration-btn selected" onclick="selectDuration(this, 2)">2h</button>
+                <button class="duration-btn" onclick="selectDuration(this, 3)">3h</button>
+                <button class="duration-btn" onclick="selectDuration(this, 4)">4h</button>
+                <button class="duration-btn" onclick="selectDuration(this, 6)">6h</button>
+                <button class="duration-btn" onclick="selectDuration(this, 8)">Dia todo</button>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label><i class="fa-solid fa-location-dot"></i> Endereço do serviço</label>
+            <input type="text" id="input-address" placeholder="Rua, número, bairro">
+            <input type="text" id="input-city" placeholder="Cidade, Estado" style="margin-top: 10px;">
+        </div>
+
+        <div class="form-section" style="margin-bottom:0">
+            <label><i class="fa-solid fa-pen-to-square"></i> Observações (opcional)</label>
+            <textarea id="input-notes" placeholder="Descreva detalhes importantes sobre o serviço..."></textarea>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="worker-summary">
+            <div class="worker-summary-header">
+                <img id="summary-photo" src="" class="worker-summary-photo" alt="">
+                <div class="worker-summary-info">
+                    <h3 id="summary-name"></h3>
+                    <p id="summary-profession"></p>
+                    <div class="worker-summary-rating" id="summary-stars"></div>
+                </div>
+            </div>
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span id="price-label">R$ 0/h × 2h</span>
+                    <span id="price-service">R$ 0,00</span>
+                </div>
+                <div class="price-row">
+                    <span>Taxa de serviço</span>
+                    <span>R$ 0,00</span>
+                </div>
+                <div class="price-row total">
+                    <span>Total estimado</span>
+                    <span id="price-total">R$ 0,00</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="confirm-btn" onclick="openModal()">
+            <i class="fa-solid fa-calendar-check"></i> Confirmar agendamento
+        </button>
+
+        <div class="security-note">
+            <i class="fa-solid fa-lock"></i>
+            Agendamento seguro · Cancelamento gratuito em até 24h
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+        <div class="modal-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h2>Agendamento confirmado!</h2>
+        <p id="modal-text">Seu serviço foi agendado com sucesso. O profissional receberá uma notificação e entrará em contato em breve.</p>
+        <div class="modal-actions">
+            <a href="home.html" class="modal-btn secondary"><i class="fa-solid fa-house"></i> Início</a>
+            <button class="modal-btn primary" onclick="closeModal()"><i class="fa-solid fa-calendar-days"></i> Meus agendamentos</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const workers = {
+    ricardo: { name: "Ricardo Santos", profession: "Eletricista", photo: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=300&q=80", rating: 5.0, reviews: 124, price: 85, services: ["Instalação elétrica", "Automação residencial", "Quadro de disjuntores", "Tomadas e interruptores", "Iluminação LED", "Painel solar"] },
+    juliana: { name: "Juliana Lima", profession: "Limpeza e Organização", photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80", rating: 4.9, reviews: 89, price: 120, services: ["Limpeza pós-obra", "Limpeza pesada", "Organização de ambientes", "Limpeza de estofados", "Organização de closet", "Cozinha profunda"] },
+    carlos: { name: "Carlos Mendes", profession: "Encanador", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80", rating: 4.8, reviews: 67, price: 90, services: ["Desentupimento", "Troca de canos", "Instalação de aquecedor", "Reparos em torneiras", "Caixa d'água", "Detecção de vazamentos"] },
+    fernanda: { name: "Fernanda Oliveira", profession: "Jardineira e Paisagista", photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&q=80", rating: 5.0, reviews: 143, price: 75, services: ["Projeto de jardim", "Jardim vertical", "Horta urbana", "Manutenção mensal", "Poda e corte", "Adubação e irrigação"] },
+    marcos: { name: "Marcos Pereira", profession: "Pintor de Obras", photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80", rating: 4.7, reviews: 52, price: 70, services: ["Pintura interna", "Pintura externa", "Textura decorativa", "Grafiato", "Cimento queimado", "Massa corrida"] },
+    ana: { name: "Ana Costa", profession: "Diarista Residencial", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80", rating: 4.9, reviews: 211, price: 55, services: ["Limpeza completa", "Limpeza de banheiros", "Cozinha e fogão", "Lavanderia", "Passar roupas", "Organização geral"] }
+};
+
+let selectedWorker = null;
+let selectedDuration = 2;
+let selectedService = null;
+
+function renderStars(rating) {
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    let html = '';
+    for (let i = 0; i < full; i++) html += '<i class="fa-solid fa-star"></i>';
+    if (half) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+    return html + ` <span style="color:#636e72; font-family:Poppins">${rating.toFixed(1)} (${workers[currentId].reviews} av.)</span>`;
+}
+
+function fmt(value) {
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function updatePrice() {
+    if (!selectedWorker) return;
+    const total = selectedWorker.price * selectedDuration;
+    document.getElementById('price-label').textContent = `${fmt(selectedWorker.price)}/h × ${selectedDuration}h`;
+    document.getElementById('price-service').textContent = fmt(total);
+    document.getElementById('price-total').textContent = fmt(total);
+}
+
+function selectDuration(btn, hours) {
+    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedDuration = hours;
+    updatePrice();
+}
+
+function selectChip(el, service) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedService = service;
+}
+
+function openModal() {
+    const date = document.getElementById('input-date').value;
+    const time = document.getElementById('input-time').value;
+    const address = document.getElementById('input-address').value;
+
+    if (!date) { alert('Por favor, selecione uma data.'); return; }
+    if (!address.trim()) { alert('Por favor, informe o endereço.'); return; }
+    if (!selectedService) { alert('Por favor, selecione um serviço.'); return; }
+
+    const dateFormatted = new Date(date + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('modal-text').textContent =
+        `${selectedWorker.name} foi agendado para ${dateFormatted} às ${time}. Você receberá uma confirmação por e-mail em breve.`;
+
+    document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('show');
+}
+
+const params = new URLSearchParams(window.location.search);
+const currentId = params.get('worker') || 'ricardo';
+selectedWorker = workers[currentId];
+
+if (selectedWorker) {
+    document.title = `Contratar ${selectedWorker.name} - ServUp`;
+    document.getElementById('back-to-profile').href = `perfil.html?worker=${currentId}`;
+    document.getElementById('summary-photo').src = selectedWorker.photo;
+    document.getElementById('summary-photo').alt = selectedWorker.name;
+    document.getElementById('summary-name').textContent = selectedWorker.name;
+    document.getElementById('summary-profession').textContent = selectedWorker.profession;
+    document.getElementById('summary-stars').innerHTML = renderStars(selectedWorker.rating);
+
+    const chips = document.getElementById('services-chips');
+    selectedWorker.services.forEach((s, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'chip' + (i === 0 ? ' selected' : '');
+        chip.textContent = s;
+        if (i === 0) selectedService = s;
+        chip.onclick = () => selectChip(chip, s);
+        chips.appendChild(chip);
+    });
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('input-date').min = today;
+
+    updatePrice();
+}
+</script>
+</body>
+</html>
